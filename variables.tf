@@ -171,13 +171,13 @@ variable "event_rule_target_id" {
 }
 
 variable "event_rules_name" {
-  description = "Rule name (will be prefixed with var.prefix and sufixed with -onsched/onevent). If null, the rule will use var.name"
+  description = "Rule name (will be prefixed with 'var.prefix-job-' and sufixed with '-onsched/onevent'). If null, the rule will use var.name"
   type        = string
-  default     = "batchjob"
+  default     = null
 
   validation {
-    condition     = can(regex("^[a-zA-Z0-9\\._-]{1,51}$", var.event_rules_name))
-    error_message = "The var.event_rules_name should match ^[a-zA-Z0-9\\._-]{1,51}$."
+    condition     = var.event_rules_name == null ? true : can(regex("^[a-zA-Z0-9\\._-]{1,47}$", var.event_rules_name))
+    error_message = "The var.event_rules_name should match ^[a-zA-Z0-9\\._-]{1,47}$ if not null."
   }
 }
 

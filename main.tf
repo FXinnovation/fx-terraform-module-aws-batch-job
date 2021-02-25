@@ -78,7 +78,7 @@ resource "aws_iam_role_policy_attachment" "service_role" {
 resource "aws_cloudwatch_event_rule" "schedule" {
   count = (var.event_rules_create && var.schedule_expression != null) ? 1 : 0
 
-  name        = format("%s%s-onsched", var.prefix, var.event_rules_name != null ? var.event_rules_name : var.name)
+  name        = format("%sjob-%s-onsched", var.prefix, var.event_rules_name != null ? var.event_rules_name : var.name)
   description = var.event_rules_description
   is_enabled  = var.event_rules_is_enabled
 

@@ -56,7 +56,7 @@ No Modules.
 | event\_rules\_create | Whether or not to create a EventBridge rule | `bool` | `true` | no |
 | event\_rules\_description | The description of the rule. | `string` | `"Run batch job based on event or schedule"` | no |
 | event\_rules\_is\_enabled | Whether or not to enable EventBridge Rule | `bool` | `true` | no |
-| event\_rules\_name | Rule name (will be prefixed with var.prefix and sufixed with -onsched/onevent). If null, the rule will use var.name | `string` | `"batchjob"` | no |
+| event\_rules\_name | Rule name (will be prefixed with 'var.prefix-job-' and sufixed with '-onsched/onevent'). If null, the rule will use var.name | `string` | `null` | no |
 | event\_rules\_role | The Amazon Resource Name (ARN) associated with the role that is used for target invocation. | `string` | `null` | no |
 | event\_tags | Map of tags that will be applied on EventBridge and IAM resources. | `map(string)` | `{}` | no |
 | job\_arn | When job\_create == false, external job definition ARN | `string` | `null` | no |
