@@ -4,7 +4,7 @@
 
 data "aws_iam_policy_document" "events_batch" {
   statement {
-    sid    = "EventsBatch1"
+    sid    = format("EventsBatch%s", var.name)
     effect = "Allow"
 
     actions = ["batch:SubmitJob"]
@@ -18,7 +18,7 @@ data "aws_iam_policy_document" "events_batch" {
 
 data "aws_iam_policy_document" "events_assume" {
   statement {
-    sid    = "EventsAssume1"
+    sid    = format("EventsAssume%s", var.name)
     effect = "Allow"
 
     actions = ["sts:AssumeRole"]
