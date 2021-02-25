@@ -44,7 +44,7 @@ resource "aws_iam_policy" "service_role" {
   count = var.event_role_create ? 1 : 0
 
   name        = format("%s%s_%s", var.prefix, var.event_role_name, var.name)
-  description = var.event_role_description
+  description = format("%s (%s)", var.event_role_description, var.name)
   path        = var.event_role_path
   policy      = data.aws_iam_policy_document.events_batch.json
 }
@@ -53,7 +53,7 @@ resource "aws_iam_role" "service_role" {
   count = var.event_role_create ? 1 : 0
 
   name               = format("%s%s_%s", var.prefix, var.event_role_name, var.name)
-  description        = var.event_role_description
+  description        = format("%s (%s)", var.event_role_description, var.name)
   path               = var.event_role_path
   assume_role_policy = data.aws_iam_policy_document.events_assume.*.json[0]
 

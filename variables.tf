@@ -118,7 +118,7 @@ variable "event_role_name" {
 }
 
 variable "event_role_description" {
-  description = "Description of the IAM policy."
+  description = "Description of the IAM policy (var.name will be appended)."
   type        = string
   default     = "Service Role for EventBridge / Batch Job"
 
