@@ -31,15 +31,12 @@ module "default" {
   name                = "batchjob"
   job_queue_arn       = module.compute_environment.batch_job_queue_this_arn
   schedule_expression = "cron(0 0 * * ? 1970)"
-
-  properties = <<CONTAINER_PROPERTIES
-{
-    "command": ["ls", "-la"],
-    "image": "busybox",
-    "memory": 256,
-    "vcpus": 1
-}
-CONTAINER_PROPERTIES
+  properties = jsonencode({
+    "image" : "busybox",
+    "command" : ["ls", "-la"],
+    "memory" : 256,
+    "vcpus" : 1,
+  })
 
   tags = local.tags
 }
