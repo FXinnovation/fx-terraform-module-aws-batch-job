@@ -21,7 +21,7 @@ variable "name" {
 
   validation {
     condition     = can(regex("^[a-zA-Z0-9_-]{1,56}$", var.name))
-    error_message = "The var.name should match “^[a-z0-9-]{1,56}$”."
+    error_message = "The var.name should match “^[a-zA-Z0-9_-]{1,56}$”."
   }
 }
 
