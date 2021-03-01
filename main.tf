@@ -42,9 +42,9 @@ resource "aws_batch_job_definition" "this" {
 
 resource "aws_iam_policy" "service_role" {
   count = var.event_role_create ? 1 : 0
-
-  name        = format("%s%s_%s", var.prefix, var.event_role_name, var.name)
-  description = format("%s (%s)", var.event_role_description, var.name)
+  #
+  name        = format("%s%s_%s", var.prefix, var.event_policy_name, var.name)
+  description = format("%s (%s)", var.event_policy_description, var.name)
   path        = var.event_role_path
   policy      = data.aws_iam_policy_document.events_batch.json
 }

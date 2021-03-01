@@ -46,10 +46,12 @@ No Modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | event\_pattern | The event pattern described a JSON object. At least one of schedule\_expression or event\_pattern is required. See full documentation of Events and Event Patterns in EventBridge for details. | `string` | `null` | no |
+| event\_policy\_description | Description of the IAM policy (var.name will be appended). | `string` | `"Service Role for EventBridge / Batch Job"` | no |
+| event\_policy\_name | Name of the policy (\_var.name will be appended). | `string` | `"AWS_Events_Invoke_Batch_Job_Queue"` | no |
 | event\_role\_arn | When event\_role\_create == false, external Service Role ARN | `string` | `null` | no |
 | event\_role\_create | Whether or not to create IAM resources for EventBridge. | `bool` | `true` | no |
-| event\_role\_description | Description of the IAM policy (var.name will be appended). | `string` | `"Service Role for EventBridge / Batch Job"` | no |
-| event\_role\_name | Name of the policy (\_var.name will be appended). | `string` | `"AWS_Events_Invoke_Batch_Job_Queue"` | no |
+| event\_role\_description | Description of the IAM role (var.name will be appended). | `string` | `"Service Role for EventBridge / Batch Job"` | no |
+| event\_role\_name | Name of the role (\_var.name will be appended). | `string` | `"AWS_Events_Invoke_Batch_Job_Queue"` | no |
 | event\_role\_path | Path in which to create the policy. | `string` | `"/service-role/"` | no |
 | event\_rule\_target\_id | The unique target assignment ID. Will be prefixed with var.prefix and sufixed by -onsched/onevent. | `string` | `"batchjob"` | no |
 | event\_rules\_bus\_name | The event bus to associate with this rule. If you omit this, the default event bus is used. | `string` | `null` | no |

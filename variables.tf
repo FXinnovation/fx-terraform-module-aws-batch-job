@@ -106,8 +106,30 @@ variable "event_role_arn" {
   }
 }
 
-variable "event_role_name" {
+variable "event_policy_name" {
   description = "Name of the policy (_var.name will be appended)."
+  type        = string
+  default     = "AWS_Events_Invoke_Batch_Job_Queue"
+
+  validation {
+    condition     = can(regex("^[a-zA-Z0-9\\+=,\\.@_-]{1,58}$", var.event_policy_name))
+    error_message = "The var.event_policy_name should match ^[a-zA-Z0-9\\+=,\\.@_-]{1,58}$."
+  }
+}
+
+variable "event_policy_description" {
+  description = "Description of the IAM policy (var.name will be appended)."
+  type        = string
+  default     = "Service Role for EventBridge / Batch Job"
+
+  validation {
+    condition     = var.event_policy_description == null ? true : length(var.event_policy_description) <= 1000
+    error_message = "The var.event_policy_description should be less than 1000 characters."
+  }
+}
+
+variable "event_role_name" {
+  description = "Name of the role (_var.name will be appended)."
   type        = string
   default     = "AWS_Events_Invoke_Batch_Job_Queue"
 
@@ -118,7 +140,7 @@ variable "event_role_name" {
 }
 
 variable "event_role_description" {
-  description = "Description of the IAM policy (var.name will be appended)."
+  description = "Description of the IAM role (var.name will be appended)."
   type        = string
   default     = "Service Role for EventBridge / Batch Job"
 
