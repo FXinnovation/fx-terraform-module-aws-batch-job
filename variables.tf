@@ -81,7 +81,7 @@ variable "timeout" {
 
   validation {
     condition     = var.timeout == null ? true : var.timeout >= 60
-    error_message = "The var.timeout should at least at 60 if not null."
+    error_message = "The var.timeout should be at least at 60 if not null."
   }
 }
 
