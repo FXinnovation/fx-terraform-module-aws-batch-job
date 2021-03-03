@@ -54,6 +54,11 @@ No Modules.
 | event\_rules\_name | Rule name (will be prefixed with 'var.prefix-job-' and sufixed with '-onsched/onevent'). If null, the rule will use var.name | `string` | `null` | no |
 | event\_rules\_role | The Amazon Resource Name (ARN) associated with the role that is used for target invocation. | `string` | `null` | no |
 | event\_tags | Map of tags that will be applied on EventBridge and IAM resources. | `map(string)` | `{}` | no |
+| execution\_role\_create | Whether or not to create the IAM execution role. | `bool` | `true` | no |
+| execution\_role\_description | Description of the IAM role for executing task (var.name will be appended). | `string` | `"Execution role for tasks"` | no |
+| execution\_role\_extras\_policies | Extra policies ARN to attach to the execution role | `list(string)` | `[]` | no |
+| execution\_role\_path | Path in which to create the policy for executing task. | `string` | `"/"` | no |
+| execution\_role\_tags | Map of tags that will be applied on IAM resources for execution role. | `map(string)` | `{}` | no |
 | job\_arn | When job\_create == false, external job definition ARN | `string` | `null` | no |
 | job\_create | Whether or not to create a job definition | `bool` | `true` | no |
 | job\_queue\_arn | External Batch Job Queue ARN | `string` | n/a | yes |
@@ -61,7 +66,7 @@ No Modules.
 | name | Name of your job, will be use by Job definition and EventBridge resources. | `string` | n/a | yes |
 | parameters | (Optional) Specifies the parameter substitution placeholders to set in the job definition. | `map(string)` | `{}` | no |
 | prefix | Prefix to be added to with all resource's names of the module. Prefix is mainly used for tests and should remain empty in normal circumstances. | `string` | `""` | no |
-| properties | A valid container properties provided as a single valid JSON document. | `string` | n/a | yes |
+| properties | A valid container properties provided as a map (see exemple here https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_job_definition / container\_properties). | `any` | n/a | yes |
 | retries | The number of times to move a job to the RUNNABLE status. You may specify between 1 and 10 attempts. | `number` | `1` | no |
 | schedule\_expression | The scheduling expression. For example, cron(0 20 * * ? *) or rate(5 minutes). At least one of schedule\_expression or event\_pattern is required. Can only be used on the default event bus. | `string` | `null` | no |
 | tags | Map of tags that will be applied on all resources. | `map(string)` | `{}` | no |
@@ -72,6 +77,12 @@ No Modules.
 | Name | Description |
 |------|-------------|
 | arn | The Amazon Resource Name of the job definition. |
+| execution\_role\_arn | The Amazon Resource Name (ARN) specifying the role. |
+| execution\_role\_create\_date | The creation date of the IAM role. |
+| execution\_role\_description | The description of the role. |
+| execution\_role\_id | The name of the role. |
+| execution\_role\_name | The name of the role. |
+| execution\_role\_unique\_id | The stable and unique string identifying the role. |
 | revision | The revision of the job definition. |
 | rule\_event\_arn | The Amazon Resource Name (ARN) of the rule. |
 | rule\_event\_id | The name of the rule. |

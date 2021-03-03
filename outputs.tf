@@ -13,6 +13,40 @@ output "revision" {
 }
 
 #####
+# IAM for Batch Job
+#####
+
+output "execution_role_arn" {
+  description = "The Amazon Resource Name (ARN) specifying the role."
+  value       = concat(aws_iam_role.execution_role.*.arn, [""])[0]
+}
+
+output "execution_role_create_date" {
+  description = "The creation date of the IAM role."
+  value       = concat(aws_iam_role.execution_role.*.create_date, [""])[0]
+}
+
+output "execution_role_description" {
+  description = "The description of the role."
+  value       = concat(aws_iam_role.execution_role.*.description, [""])[0]
+}
+
+output "execution_role_id" {
+  description = "The name of the role."
+  value       = concat(aws_iam_role.execution_role.*.id, [""])[0]
+}
+
+output "execution_role_name" {
+  description = "The name of the role."
+  value       = concat(aws_iam_role.execution_role.*.name, [""])[0]
+}
+
+output "execution_role_unique_id" {
+  description = "The stable and unique string identifying the role."
+  value       = concat(aws_iam_role.execution_role.*.unique_id, [""])[0]
+}
+
+#####
 # IAM for EventBridge
 #####
 

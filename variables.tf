@@ -47,8 +47,7 @@ variable "job_arn" {
 }
 
 variable "properties" {
-  description = "A valid container properties provided as a single valid JSON document."
-  type        = string
+  description = "A valid container properties provided as a map (see exemple here https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_job_definition / container_properties)."
 }
 
 variable "parameters" {
@@ -82,6 +81,38 @@ variable "timeout" {
   validation {
     condition     = var.timeout == null ? true : var.timeout >= 60
     error_message = "The var.timeout should be at least at 60 if not null."
+  }
+}
+
+#####
+# IAM for Batch Job
+#####
+
+variable "execution_role_create" {
+  description = "Whether or not to create the IAM execution role."
+  type        = bool
+  default     = true
+}
+
+variable "execution_role_description" {
+  description = "Description of the IAM role for executing task (var.name will be appended)."
+  type        = string
+  default     = "Execution role for tasks"
+
+  validation {
+    condition     = var.execution_role_description == null ? true : length(var.execution_role_description) <= 1000
+    error_message = "The var.execution_role_description should be less than 1000 characters."
+  }
+}
+
+variable "execution_role_path" {
+  description = "Path in which to create the policy for executing task."
+  type        = string
+  default     = "/"
+
+  validation {
+    condition     = var.execution_role_path == null ? true : can(regex("^(\\x2F$)|(\\x2F[\\x21-\\x7F]+\\x2F)*$", var.execution_role_path))
+    error_message = "The var.execution_role_path must match “^(\\x2F$)|(\\x2F[\\x21-\\x7F]+\\x2F)*$”."
   }
 }
 
@@ -158,6 +189,23 @@ variable "event_role_path" {
   validation {
     condition     = var.event_role_path == null ? true : can(regex("^(\\x2F$)|(\\x2F[\\x21-\\x7F]+\\x2F)*$", var.event_role_path))
     error_message = "The var.event_role_path must match “^(\\x2F$)|(\\x2F[\\x21-\\x7F]+\\x2F)*$”."
+  }
+}
+
+variable "execution_role_tags" {
+  description = "Map of tags that will be applied on IAM resources for execution role."
+  type        = map(string)
+  default     = {}
+}
+
+variable "execution_role_extras_policies" {
+  description = "Extra policies ARN to attach to the execution role"
+  type        = list(string)
+  default     = []
+
+  validation {
+    condition     = var.execution_role_extras_policies != null ? can([for s in var.execution_role_extras_policies : regex("^arn:aws[a-zA-Z0-9-]*:iam::[0-9]{12}:policy/[a-zA-Z0-9\\+=,\\.@_-]{1,64}$", s)]) : true
+    error_message = "The var.execution_role_extras_policies should match ^arn:aws:iam[a-zA-Z0-9-]*::[0-9]{12}:policy/[a-zA-Z0-9\\+=,\\.@_-]{1,64}$ if not null."
   }
 }
 
