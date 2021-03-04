@@ -76,32 +76,32 @@ No Modules.
 
 | Name | Description |
 |------|-------------|
-| arn | The Amazon Resource Name of the job definition. |
-| execution\_role\_arn | The Amazon Resource Name (ARN) specifying the role. |
-| execution\_role\_create\_date | The creation date of the IAM role. |
-| execution\_role\_description | The description of the role. |
-| execution\_role\_id | The name of the role. |
-| execution\_role\_name | The name of the role. |
-| execution\_role\_unique\_id | The stable and unique string identifying the role. |
-| revision | The revision of the job definition. |
-| rule\_event\_arn | The Amazon Resource Name (ARN) of the rule. |
-| rule\_event\_id | The name of the rule. |
-| rule\_schedule\_arn | The Amazon Resource Name (ARN) of the rule. |
-| rule\_schedule\_id | The name of the rule. |
-| service\_policy\_arn | The ARN assigned by AWS to this policy. |
-| service\_policy\_description | The description of the policy. |
-| service\_policy\_id | The policy's ID. |
-| service\_policy\_name | The name of the policy. |
-| service\_policy\_path | The path of the policy in IAM. |
-| service\_policy\_policy | The policy document. |
-| service\_role\_arn | The Amazon Resource Name (ARN) specifying the role. |
-| service\_role\_create\_date | The creation date of the IAM role. |
-| service\_role\_description | The description of the role. |
-| service\_role\_id | The name of the role. |
-| service\_role\_name | The name of the role. |
-| service\_role\_unique\_id | The stable and unique string identifying the role. |
-| target\_event\_arn | CloudWatch Event Target Arn. |
-| target\_schedule\_arn | CloudWatch Event Target Arn. |
+| arn | n/a |
+| execution\_role\_arn | n/a |
+| execution\_role\_create\_date | n/a |
+| execution\_role\_description | n/a |
+| execution\_role\_id | n/a |
+| execution\_role\_name | n/a |
+| execution\_role\_unique\_id | n/a |
+| revision | n/a |
+| rule\_event\_arn | n/a |
+| rule\_event\_id | n/a |
+| rule\_schedule\_arn | n/a |
+| rule\_schedule\_id | n/a |
+| service\_policy\_arn | n/a |
+| service\_policy\_description | n/a |
+| service\_policy\_id | n/a |
+| service\_policy\_name | n/a |
+| service\_policy\_path | n/a |
+| service\_policy\_policy | n/a |
+| service\_role\_arn | n/a |
+| service\_role\_create\_date | n/a |
+| service\_role\_description | n/a |
+| service\_role\_id | n/a |
+| service\_role\_name | n/a |
+| service\_role\_unique\_id | n/a |
+| target\_event\_arn | n/a |
+| target\_schedule\_arn | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 ## Versioning
