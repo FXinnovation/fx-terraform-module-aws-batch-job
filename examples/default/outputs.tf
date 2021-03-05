@@ -11,6 +11,34 @@ output "revision" {
 }
 
 #####
+# IAM for Batch Job
+#####
+
+output "execution_role_arn" {
+  value = module.default.execution_role_arn
+}
+
+output "execution_role_create_date" {
+  value = module.default.execution_role_create_date
+}
+
+output "execution_role_description" {
+  value = module.default.execution_role_description
+}
+
+output "execution_role_id" {
+  value = module.default.execution_role_id
+}
+
+output "execution_role_name" {
+  value = module.default.execution_role_name
+}
+
+output "execution_role_unique_id" {
+  value = module.default.execution_role_unique_id
+}
+
+#####
 # IAM for EventBridge
 #####
 

@@ -14,7 +14,10 @@ resource "aws_batch_job_definition" "this" {
   name = format("%s%s", var.prefix, var.name)
   type = "container"
 
-  container_properties = var.properties
+  container_properties = jsonencode(merge(
+    var.execution_role_create ? { "jobRoleArn" : aws_iam_role.execution_role.0.arn } : {},
+    var.properties,
+  ))
 
   parameters = var.parameters
 
@@ -37,12 +40,38 @@ resource "aws_batch_job_definition" "this" {
 }
 
 #####
+# IAM for Batch Job
+#####
+
+resource "aws_iam_role" "execution_role" {
+  count = var.execution_role_create ? 1 : 0
+
+  name               = format("%s%s-ExecutionRole", var.prefix, var.name)
+  description        = format("%s (%s)", var.execution_role_description, var.name)
+  path               = var.execution_role_path
+  assume_role_policy = data.aws_iam_policy_document.tasks_assume.*.json[0]
+
+  tags = merge(
+    local.tags,
+    var.tags,
+    var.execution_role_tags,
+  )
+}
+
+resource "aws_iam_role_policy_attachment" "execution_role_extras_policies" {
+  count = var.execution_role_create ? length(var.execution_role_extras_policies) : 0
+
+  role       = aws_iam_role.execution_role.0.name
+  policy_arn = var.execution_role_extras_policies[count.index]
+}
+
+#####
 # IAM for EventBridge
 #####
 
 resource "aws_iam_policy" "service_role" {
   count = var.event_role_create ? 1 : 0
-  #
+
   name        = format("%s%s_%s", var.prefix, var.event_policy_name, var.name)
   description = format("%s (%s)", var.event_policy_description, var.name)
   path        = var.event_role_path

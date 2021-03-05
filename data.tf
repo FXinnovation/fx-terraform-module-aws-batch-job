@@ -29,3 +29,17 @@ data "aws_iam_policy_document" "events_assume" {
     }
   }
 }
+
+data "aws_iam_policy_document" "tasks_assume" {
+  statement {
+    sid    = format("EventsAssume%s", var.name)
+    effect = "Allow"
+
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      type        = "Service"
+      identifiers = ["ecs-tasks.amazonaws.com"]
+    }
+  }
+}

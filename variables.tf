@@ -11,7 +11,7 @@ variable "prefix" {
 
   validation {
     condition     = can(regex("^[a-z0-9-]{0,16}$", var.prefix))
-    error_message = "The var.prefix should match “^[a-z0-9-]{0,16}$”."
+    error_message = "The var.prefix must match “^[a-z0-9-]{0,16}$”."
   }
 }
 
@@ -21,7 +21,7 @@ variable "name" {
 
   validation {
     condition     = can(regex("^[a-zA-Z0-9_-]{1,56}$", var.name))
-    error_message = "The var.name should match “^[a-zA-Z0-9_-]{1,56}$”."
+    error_message = "The var.name must match “^[a-zA-Z0-9_-]{1,56}$”."
   }
 }
 
@@ -42,13 +42,12 @@ variable "job_arn" {
 
   validation {
     condition     = var.job_arn == null ? true : can(regex("^arn:aws[a-zA-Z0-9-]*:batch:[a-zA-Z0-9-]+:[0-9]{12}:job-definition/[a-zA-Z0-9\\+=,\\.@_-]{1,64}:[0-9]*$", var.job_arn))
-    error_message = "The var.job_arn should match ^arn:aws[a-zA-Z0-9-]*:batch:[a-zA-Z0-9-]+:[0-9]{12}:job-definition/[a-zA-Z0-9\\+=,\\.@_-]{1,64}:[0-9]*$."
+    error_message = "The var.job_arn must match ^arn:aws[a-zA-Z0-9-]*:batch:[a-zA-Z0-9-]+:[0-9]{12}:job-definition/[a-zA-Z0-9\\+=,\\.@_-]{1,64}:[0-9]*$."
   }
 }
 
 variable "properties" {
-  description = "A valid container properties provided as a single valid JSON document."
-  type        = string
+  description = "A valid container properties provided as a map (see an example here https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_job_definition / container_properties)."
 }
 
 variable "parameters" {
@@ -64,12 +63,12 @@ variable "retries" {
 
   validation {
     condition     = var.retries >= 1 && var.retries <= 10
-    error_message = "The var.retries should be between 1 and 10."
+    error_message = "The var.retries must be between 1 and 10."
   }
 }
 
 variable "job_tags" {
-  description = "Map of tags that will be applied on job definition."
+  description = "Map of tags that will be applied on job definition (merged on local.tags, var.tags)."
   type        = map(string)
   default     = {}
 }
@@ -81,7 +80,39 @@ variable "timeout" {
 
   validation {
     condition     = var.timeout == null ? true : var.timeout >= 60
-    error_message = "The var.timeout should be at least at 60 if not null."
+    error_message = "The var.timeout must be at least at 60 if not null."
+  }
+}
+
+#####
+# IAM for Batch Job
+#####
+
+variable "execution_role_create" {
+  description = "Whether or not to create the IAM execution role."
+  type        = bool
+  default     = true
+}
+
+variable "execution_role_description" {
+  description = "Description of the IAM role for executing task (var.name will be appended)."
+  type        = string
+  default     = "Execution role for tasks"
+
+  validation {
+    condition     = var.execution_role_description == null ? true : length(var.execution_role_description) <= 1000
+    error_message = "The var.execution_role_description must be less than 1000 characters."
+  }
+}
+
+variable "execution_role_path" {
+  description = "Path in which to create the policy for executing task."
+  type        = string
+  default     = "/"
+
+  validation {
+    condition     = var.execution_role_path == null ? true : can(regex("^(\\x2F$)|(\\x2F[\\x21-\\x7F]+\\x2F)*$", var.execution_role_path))
+    error_message = "The var.execution_role_path must match “^(\\x2F$)|(\\x2F[\\x21-\\x7F]+\\x2F)*$”."
   }
 }
 
@@ -102,7 +133,7 @@ variable "event_role_arn" {
 
   validation {
     condition     = var.event_role_arn == null ? true : regex("^arn:aws[a-zA-Z0-9-]*:iam::[0-9]{12}:role/[a-zA-Z0-9\\+=,\\.@_-]{1,64}$", var.event_role_arn)
-    error_message = "The var.event_role_arn should match ^arn:aws[a-zA-Z0-9-]*:iam::[0-9]{12}:role/[a-zA-Z0-9\\+=,\\.@_-]{1,64}$."
+    error_message = "The var.event_role_arn must match ^arn:aws[a-zA-Z0-9-]*:iam::[0-9]{12}:role/[a-zA-Z0-9\\+=,\\.@_-]{1,64}$."
   }
 }
 
@@ -113,7 +144,7 @@ variable "event_policy_name" {
 
   validation {
     condition     = can(regex("^[a-zA-Z0-9\\+=,\\.@_-]{1,58}$", var.event_policy_name))
-    error_message = "The var.event_policy_name should match ^[a-zA-Z0-9\\+=,\\.@_-]{1,58}$."
+    error_message = "The var.event_policy_name must match ^[a-zA-Z0-9\\+=,\\.@_-]{1,58}$."
   }
 }
 
@@ -124,7 +155,7 @@ variable "event_policy_description" {
 
   validation {
     condition     = var.event_policy_description == null ? true : length(var.event_policy_description) <= 1000
-    error_message = "The var.event_policy_description should be less than 1000 characters."
+    error_message = "The var.event_policy_description must be less than 1000 characters."
   }
 }
 
@@ -135,7 +166,7 @@ variable "event_role_name" {
 
   validation {
     condition     = can(regex("^[a-zA-Z0-9\\+=,\\.@_-]{1,58}$", var.event_role_name))
-    error_message = "The var.event_role_name should match ^[a-zA-Z0-9\\+=,\\.@_-]{1,58}$."
+    error_message = "The var.event_role_name must match ^[a-zA-Z0-9\\+=,\\.@_-]{1,58}$."
   }
 }
 
@@ -146,7 +177,7 @@ variable "event_role_description" {
 
   validation {
     condition     = var.event_role_description == null ? true : length(var.event_role_description) <= 1000
-    error_message = "The var.event_role_description should be less than 1000 characters."
+    error_message = "The var.event_role_description must be less than 1000 characters."
   }
 }
 
@@ -158,6 +189,23 @@ variable "event_role_path" {
   validation {
     condition     = var.event_role_path == null ? true : can(regex("^(\\x2F$)|(\\x2F[\\x21-\\x7F]+\\x2F)*$", var.event_role_path))
     error_message = "The var.event_role_path must match “^(\\x2F$)|(\\x2F[\\x21-\\x7F]+\\x2F)*$”."
+  }
+}
+
+variable "execution_role_tags" {
+  description = "Map of tags that will be applied on IAM resources for execution role (merged on local.tags, var.tags)."
+  type        = map(string)
+  default     = {}
+}
+
+variable "execution_role_extras_policies" {
+  description = "Extra policies ARN to attach to the execution role"
+  type        = list(string)
+  default     = []
+
+  validation {
+    condition     = var.execution_role_extras_policies != null ? can([for s in var.execution_role_extras_policies : regex("^arn:aws[a-zA-Z0-9-]*:iam::[0-9]{12}:policy/[a-zA-Z0-9\\+=,\\.@_-]{1,64}$", s)]) : true
+    error_message = "The var.execution_role_extras_policies must match ^arn:aws:iam[a-zA-Z0-9-]*::[0-9]{12}:policy/[a-zA-Z0-9\\+=,\\.@_-]{1,64}$ if not null."
   }
 }
 
@@ -177,7 +225,7 @@ variable "job_queue_arn" {
 
   validation {
     condition     = var.job_queue_arn == null ? true : can(regex("^arn:aws[a-zA-Z0-9-]*:batch:[a-zA-Z0-9-]+:[0-9]{12}:job-queue/[a-zA-Z0-9_-]{1,128}$", var.job_queue_arn))
-    error_message = "The var.job_queue_arn should match ^arn:aws[a-zA-Z0-9-]*:batch:[a-zA-Z0-9-]+:[0-9]{12}:job-queue/[a-zA-Z0-9\\+=,\\.@_-]{1,64}$."
+    error_message = "The var.job_queue_arn must match ^arn:aws[a-zA-Z0-9-]*:batch:[a-zA-Z0-9-]+:[0-9]{12}:job-queue/[a-zA-Z0-9\\+=,\\.@_-]{1,64}$."
   }
 }
 
@@ -188,7 +236,7 @@ variable "event_rule_target_id" {
 
   validation {
     condition     = var.event_rule_target_id == null ? true : can(regex("^[a-zA-Z0-9\\._-]{1,51}$", var.event_rule_target_id))
-    error_message = "The var.event_rule_target_id should match ^[a-zA-Z0-9\\._-]{1,51}$."
+    error_message = "The var.event_rule_target_id must match ^[a-zA-Z0-9\\._-]{1,51}$."
   }
 }
 
@@ -199,7 +247,7 @@ variable "event_rules_name" {
 
   validation {
     condition     = var.event_rules_name == null ? true : can(regex("^[a-zA-Z0-9\\._-]{1,47}$", var.event_rules_name))
-    error_message = "The var.event_rules_name should match ^[a-zA-Z0-9\\._-]{1,47}$ if not null."
+    error_message = "The var.event_rules_name must match ^[a-zA-Z0-9\\._-]{1,47}$ if not null."
   }
 }
 
@@ -210,7 +258,7 @@ variable "event_rules_description" {
 
   validation {
     condition     = var.event_rules_description == null ? true : length(var.event_rules_description) <= 512
-    error_message = "The var.event_rules_description should be less than 512 characters."
+    error_message = "The var.event_rules_description must be less than 512 characters."
   }
 }
 
@@ -227,7 +275,7 @@ variable "event_rules_bus_name" {
 
   validation {
     condition     = var.event_rules_bus_name == null ? true : can(regex("^[a-zA-Z0-9\\._-]{0,256}$", var.event_rules_bus_name))
-    error_message = "The var.event_rules_bus_name should match ^[a-zA-Z0-9\\._-]{0,256}$."
+    error_message = "The var.event_rules_bus_name must match ^[a-zA-Z0-9\\._-]{0,256}$."
   }
 }
 
@@ -238,7 +286,7 @@ variable "schedule_expression" {
 
   validation {
     condition     = var.schedule_expression == null ? true : can(regex("^(cron|rate)\\(.*\\)$", var.schedule_expression))
-    error_message = "The var.schedule_expression should match ^(cron|rate)\\(.*\\)$."
+    error_message = "The var.schedule_expression must match ^(cron|rate)\\(.*\\)$."
   }
 }
 
@@ -255,12 +303,12 @@ variable "event_rules_role" {
 
   validation {
     condition     = var.event_rules_role == null ? true : can(regex("^arn:aws[a-zA-Z0-9-]*:iam::[0-9]{12}:role/[a-zA-Z0-9\\+=,\\.@_-]{1,64}$", var.event_rules_role))
-    error_message = "The var.event_rules_role should match ^arn:aws:iam[a-zA-Z0-9-]*::[0-9]{12}:role/[a-zA-Z0-9\\+=,\\.@_-]{1,64}$."
+    error_message = "The var.event_rules_role must match ^arn:aws:iam[a-zA-Z0-9-]*::[0-9]{12}:role/[a-zA-Z0-9\\+=,\\.@_-]{1,64}$."
   }
 }
 
 variable "event_tags" {
-  description = "Map of tags that will be applied on EventBridge and IAM resources."
+  description = "Map of tags that will be applied on EventBridge and IAM resources (merged on local.tags, var.tags)."
   type        = map(string)
   default     = {}
 }
