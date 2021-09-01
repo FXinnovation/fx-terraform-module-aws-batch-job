@@ -20,7 +20,7 @@ resource "aws_iam_policy" "extra_policy" {
 }
 
 module "compute_environment" {
-  source = "git::https://scm.dazzlingwrench.fxinnovation.com/fxinnovation-public/terraform-module-aws-batch.git?ref=0.1.1"
+  source = "git::ssh://git@scm.dazzlingwrench.fxinnovation.com:2222/fxinnovation-public/terraform-module-aws-batch.git?ref=0.1.1"
 
   prefix = format("tft%s-", random_string.prefix.result)
 
