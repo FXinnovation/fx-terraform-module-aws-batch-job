@@ -25,6 +25,7 @@ variable "name" {
   }
 }
 
+
 #####
 # Batch Job
 #####
@@ -84,6 +85,7 @@ variable "timeout" {
   }
 }
 
+
 #####
 # IAM for Batch Job
 #####
@@ -115,6 +117,7 @@ variable "execution_role_path" {
     error_message = "The var.execution_role_path must match “^(\\x2F$)|(\\x2F[\\x21-\\x7F]+\\x2F)*$”."
   }
 }
+
 
 #####
 # IAM for EventBridge
@@ -208,6 +211,7 @@ variable "execution_role_extras_policies" {
     error_message = "The var.execution_role_extras_policies must match ^arn:aws:iam[a-zA-Z0-9-]*::[0-9]{12}:policy/[a-zA-Z0-9\\+=,\\.@_-]{1,64}$ if not null."
   }
 }
+
 
 #####
 # EventBridge Rules

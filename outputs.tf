@@ -10,6 +10,7 @@ output "revision" {
   value = concat(aws_batch_job_definition.this.*.revision, [""])[0]
 }
 
+
 #####
 # IAM for Batch Job
 #####
@@ -37,6 +38,7 @@ output "execution_role_name" {
 output "execution_role_unique_id" {
   value = concat(aws_iam_role.execution_role.*.unique_id, [""])[0]
 }
+
 
 #####
 # IAM for EventBridge
@@ -89,6 +91,7 @@ output "service_role_name" {
 output "service_role_unique_id" {
   value = concat(aws_iam_role.service_role.*.unique_id, [""])[0]
 }
+
 
 #####
 # EventBridge Rules
