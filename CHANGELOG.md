@@ -9,8 +9,8 @@
 * chore: pins `aws` provider to `>= 3.0`.
 * chore: bumps `terraform` + providers versions in example:
   * pins `terraform` to `>= 0.14`.
-  * pins `aws` provider to `>= 3.5`.
-  * pins `random` provider to `>= 3.1`.
+  * pins `aws` provider to `>= 3.0`.
+  * pins `random` provider to `>= 3.0`.
 * chore: bumps batch module version to last release `1.0.0`.
 * refactor: example test cases:
   * rename example `datasources.tf` to `data.tf`.
