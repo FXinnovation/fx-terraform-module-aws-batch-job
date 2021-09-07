@@ -27,7 +27,7 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_compute_environment"></a> [compute\_environment](#module\_compute\_environment) | git::ssh://git@scm.dazzlingwrench.fxinnovation.com:2222/fxinnovation-public/terraform-module-aws-batch.git | 0.1.1 |
+| <a name="module_compute_environment"></a> [compute\_environment](#module\_compute\_environment) | git::ssh://git@scm.dazzlingwrench.fxinnovation.com:2222/fxinnovation-public/terraform-module-aws-batch.git | 1.0.0 |
 | <a name="module_default"></a> [default](#module\_default) | ../../ | n/a |
 
 ## Resources
