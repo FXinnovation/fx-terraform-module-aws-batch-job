@@ -10,6 +10,7 @@ output "revision" {
   value = module.default.revision
 }
 
+
 #####
 # IAM for Batch Job
 #####
@@ -37,6 +38,7 @@ output "execution_role_name" {
 output "execution_role_unique_id" {
   value = module.default.execution_role_unique_id
 }
+
 
 #####
 # IAM for EventBridge
@@ -89,6 +91,7 @@ output "service_role_name" {
 output "service_role_unique_id" {
   value = module.default.service_role_unique_id
 }
+
 
 #####
 # EventBridge Rules

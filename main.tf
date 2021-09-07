@@ -4,6 +4,7 @@ locals {
   }
 }
 
+
 #####
 # Batch Job
 #####
@@ -39,6 +40,7 @@ resource "aws_batch_job_definition" "this" {
   )
 }
 
+
 #####
 # IAM for Batch Job
 #####
@@ -64,6 +66,7 @@ resource "aws_iam_role_policy_attachment" "execution_role_extras_policies" {
   role       = aws_iam_role.execution_role.0.name
   policy_arn = var.execution_role_extras_policies[count.index]
 }
+
 
 #####
 # IAM for EventBridge
@@ -99,6 +102,7 @@ resource "aws_iam_role_policy_attachment" "service_role" {
   role       = aws_iam_role.service_role.0.name
   policy_arn = aws_iam_policy.service_role.0.arn
 }
+
 
 #####
 # EventBridge Rules
