@@ -7,7 +7,7 @@ resource "random_string" "prefix" {
 
 locals {
   tags = {
-    Env    = Test
+    Env    = "Test"
     Prefix = random_string.prefix.result
   }
 }
