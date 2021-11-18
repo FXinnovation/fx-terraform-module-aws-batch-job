@@ -18,6 +18,18 @@ resource "aws_batch_job_definition" "this" {
   container_properties = jsonencode(merge(
     var.execution_role_create ? { "jobRoleArn" : aws_iam_role.execution_role.0.arn } : {},
     var.properties,
+ "logConfiguration": { 
+         "logDriver": "string",
+         "options": { 
+            "string" : "string" 
+         },
+         "secretOptions": [ 
+            { 
+               "name": "string",
+               "valueFrom": "string"
+            }
+         ]
+      },
   ))
 
   parameters = var.parameters
