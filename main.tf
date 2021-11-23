@@ -33,7 +33,7 @@ resource "aws_batch_job_definition" "this" {
     }
   }
 
-  propagateTags = true
+  propagate_tags = true
 
   tags = merge(
     local.tags,
