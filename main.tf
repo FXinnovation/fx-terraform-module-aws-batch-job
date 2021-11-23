@@ -31,6 +31,10 @@ resource "aws_batch_job_definition" "this" {
     content {
       attempt_duration_seconds = var.timeout
     }
+    "propagateTags": true,
+    "timeout": {
+        "attemptDurationSeconds": 0
+    },
   }
 
   tags = merge(
