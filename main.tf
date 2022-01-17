@@ -22,6 +22,8 @@ resource "aws_batch_job_definition" "this" {
 
   parameters = var.parameters
 
+  platform_capabilities = var.platform_capabilities
+
   retry_strategy {
     attempts = var.retries
   }
@@ -61,7 +63,7 @@ resource "aws_iam_role" "execution_role" {
 }
 
 resource "aws_iam_role_policy_attachment" "execution_role_extras_policies" {
-  count = var.execution_role_create ? length(var.execution_role_extras_policies) : 0
+  count = var.execution_role_create ? length(var.execution_role_extras_policies) : 0 #TODO: better use for_each here; Breaking Change
 
   role       = aws_iam_role.execution_role.0.name
   policy_arn = var.execution_role_extras_policies[count.index]

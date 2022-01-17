@@ -71,6 +71,7 @@ No modules.
 | <a name="input_job_tags"></a> [job\_tags](#input\_job\_tags) | Map of tags that will be applied on job definition (merged on local.tags, var.tags). | `map(string)` | `{}` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name of your job, will be use by Job definition and EventBridge resources. | `string` | n/a | yes |
 | <a name="input_parameters"></a> [parameters](#input\_parameters) | (Optional) Specifies the parameter substitution placeholders to set in the job definition. | `map(string)` | `{}` | no |
+| <a name="input_platform_capabilities"></a> [platform\_capabilities](#input\_platform\_capabilities) | (Optional) The platform capabilities required by the job definition. If no value is specified, it defaults to EC2. To run the job on Fargate resources, specify FARGATE. | `list(string)` | `null` | no |
 | <a name="input_prefix"></a> [prefix](#input\_prefix) | Prefix to be added to with all resource's names of the module. Prefix is mainly used for tests and should remain empty in normal circumstances. | `string` | `""` | no |
 | <a name="input_properties"></a> [properties](#input\_properties) | A valid container properties provided as a map (see an example here https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_job_definition / container\_properties). | `any` | n/a | yes |
 | <a name="input_retries"></a> [retries](#input\_retries) | The number of times to move a job to the RUNNABLE status. You may specify between 1 and 10 attempts. | `number` | `1` | no |
