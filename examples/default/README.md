@@ -27,7 +27,7 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| compute_environment | git::https://scm.dazzlingwrench.fxinnovation.com/fxinnovation-public/terraform-module-aws-batch.git?ref=0.1.0 |  |
+| compute_environment | git::https://github.com/FXinnovation/fx-terraform-module-aws-batch.git?ref=0.1.0 |  |
 | default | ../../ |  |
 
 ## Resources
