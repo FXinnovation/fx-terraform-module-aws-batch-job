@@ -2,7 +2,7 @@
 
 Terraform module to create and schedule an AWS Batch Job.
 
-This module doesn't create the Batch compute environment, you can call [our batch module](https://scm.dazzlingwrench.fxinnovation.com/fxinnovation-public/terraform-module-aws-batch) in order to create it (please take a look at [examples/default/](examples/default/)).
+This module doesn't create the Batch compute environment, you can call [our batch module](https://github.com/FXinnovation/fx-terraform-module-aws-batch) in order to create it (please take a look at [examples/default/](examples/default/)).
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
