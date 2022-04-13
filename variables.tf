@@ -49,12 +49,19 @@ variable "job_arn" {
 
 variable "properties" {
   description = "A valid container properties provided as a map (see an example here https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/batch_job_definition / container_properties)."
+  type        = any # fix merge error
 }
 
 variable "parameters" {
   description = "(Optional) Specifies the parameter substitution placeholders to set in the job definition."
   type        = map(string)
   default     = {}
+}
+
+variable "platform_capabilities" {
+  description = "(Optional) The platform capabilities required by the job definition. If no value is specified, it defaults to EC2. To run the job on Fargate resources, specify FARGATE."
+  type        = list(string)
+  default     = null
 }
 
 variable "retries" {
