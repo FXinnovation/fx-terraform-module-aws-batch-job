@@ -30,7 +30,7 @@ $ terraform apply
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_compute_environment"></a> [compute\_environment](#module\_compute\_environment) | git::ssh://git@github.com/FXinnovation/fx-terraform-module-aws-batch.git | 1.0.0 |
+| <a name="module_compute_environment"></a> [compute\_environment](#module\_compute\_environment) | github.com/FXinnovation/fx-terraform-module-aws-batch.git | 1.0.0 |
 | <a name="module_default"></a> [default](#module\_default) | ../../ | n/a |
 
 ## Resources
